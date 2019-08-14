@@ -1,6 +1,5 @@
-# Grabbing the first number
-print("Simple Calculator App")
-
+print("Simple Calculator App")  # Title
+# Grabbing user input
 firstNum = float(input("Input your first number: "))
 operator = input("Input operator: ")
 secondNum = float(input("Input your second number: "))

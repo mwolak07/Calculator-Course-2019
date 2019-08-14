@@ -1,5 +1,4 @@
-# Grabbing the first number
-print("Simple Calculator App")
+print("Simple Calculator App")  # Title
 # Grabbing user input
 firstNum = input("Input your first number")
 operator = input("Input operator")
