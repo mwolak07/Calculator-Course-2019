@@ -1,4 +1,4 @@
-print("Simple Calculator App")  # Title
+print("Simple Calculator App\n")  # Title
 # Grabbing user input
 firstNum = int(input("Input your first number: "))
 operator = input("Input operator: ")
