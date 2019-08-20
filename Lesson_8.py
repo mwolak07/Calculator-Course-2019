@@ -1,6 +1,6 @@
 # Lesson 8 of Calculator Course
 
-from queue import LifoQueue
+from collections import deque
 
 
 # Separates an input line using a list of separators
@@ -46,17 +46,27 @@ def get_result(num_1, num_2, op):
         return num_1 / num_2
 
 
+# Evaluates a postfix expression using a stack
+# Scans through input, left to right. If term is a number, it is pushed onto the stack.
+# If it is an operator, the last two numbers are popped off of the stack,
+# and the result of the operation with those two numbers it pushed onto the stack.
+# At the end, the last thing on the stack is the result, which is popped and returned
 def evaluate_postfix(input_list, operators):
-    stack = LifoQueue()
+    stack = deque()
 
+    # Iterating through input
     for term in input_list:
+        # Performing operation for operator term
         if term in operators:
-            num1 = float(stack.get())
-            num2 = float(stack.get())
-            stack.put(get_result(num1, num2, term))
+            num2 = float(stack.pop())
+            num1 = float(stack.pop())
+            stack.append(get_result(num1, num2, term))
+        # Pushing to stack for number
         else:
-            stack.put(term)
-    return float(stack.get())
+            stack.append(term)
+
+    # Returning last thing on the stack
+    return float(stack.pop())
 
 
 # Checks to see if input types are valid (float) by trying to cast every term except for operators to a float.
@@ -76,13 +86,52 @@ def check_input_type(input_list, operators):
     return True
 
 
+# Checks to see if input is in order
+# First makes sure input does not start or end with operator
+# Then iterates through list and makes sure operators are not used multiple times back to back
+def check_input_order(input_list, operators):
+    # Starts or ends with operator
+    if input_list[0] in operators or input_list[-1] in operators:
+        return False
+
+    # Scanning for repeat operators
+    operator_flag = False
+    for term in input_list:
+        # Identified operator
+        if term in operators:
+            # Previous term was operator,
+            if operator_flag:
+                return False
+            # Indicate operator was encountered
+            else:
+                operator_flag = True
+        # Indicate term was not operator
+        else:
+            operator_flag = False
+
+    return True
+
+
 print("Simple Calculator App\n")  # Title
 validOperators = ["+", "-", "/", "*"]
 
 # While loop to keep app running
 while True:
-    inList = input("Input your postfix expression: ").split(" ")
+    # Getting user inputted expression string
+    inString = input("Input your expression: ").strip()
 
+    # Making sure start or end of input is not operator
+    if inString[0] in validOperators or inString[-1] in validOperators:
+        print("Expression cannot start or end with operator, please try again\n")
+        continue
+
+    # Separating terms of expression into a list
+    inList = separate_input(inString, validOperators)
+
+    # Making sure user inputted infix expression is correct
+    if not check_input_order(inList, validOperators):
+        print("Invalid input order, please try again\n")
+        continue
     if not check_input_type(inList, validOperators):
         print("Invalid input type, please try again\n")
         continue
