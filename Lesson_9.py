@@ -3,6 +3,10 @@
 from queue import LifoQueue
 
 
+def convert_infix(input_line):
+    return ["beans"]
+
+
 # Separates an input line using a list of separators
 # Iterates over the input line character by character until an operator is found. At that point,
 # the slice from the previous separator to the current one is appened to the output list,
