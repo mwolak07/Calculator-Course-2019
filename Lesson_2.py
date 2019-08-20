@@ -1,3 +1,5 @@
+# Lesson 2 of Calculator Course
+
 print("Simple Calculator App\n")  # Title
 # Grabbing user input
 firstNum = int(input("Input your first number: "))

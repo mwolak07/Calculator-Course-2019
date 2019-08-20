@@ -1,3 +1,6 @@
+# Lesson 4 of Calculator Course
+
+
 # Takes two numbers, num_1 and num_2 and
 # returns the result of the operation specified by op.
 def get_result(num_1, num_2, op):
